@@ -1,17 +1,10 @@
-import { useState, useEffect } from 'react';
-import { initSDK, getAccelerationMode } from './runanywhere';
+import { useEffect, useState } from 'react';
+import { initSDK } from './runanywhere';
 import { ParallelYouTab } from './components/ParallelYouTab';
-import { ChatTab } from './components/ChatTab';
-import { VisionTab } from './components/VisionTab';
-import { VoiceTab } from './components/VoiceTab';
-import { ToolsTab } from './components/ToolsTab';
-
-type Tab = 'parallel' | 'chat' | 'vision' | 'voice' | 'tools';
 
 export function App() {
   const [sdkReady, setSdkReady] = useState(false);
   const [sdkError, setSdkError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<Tab>('parallel');
 
   useEffect(() => {
     initSDK()
@@ -21,57 +14,34 @@ export function App() {
 
   if (sdkError) {
     return (
-      <div className="app-loading">
-        <h2>SDK Error</h2>
-        <p className="error-text">{sdkError}</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center text-white p-8">
+        <div className="backdrop-blur-xl bg-red-500/10 border border-red-500/30 rounded-3xl p-8 max-w-md text-center">
+          <span className="text-6xl mb-4 block">⚠️</span>
+          <h2 className="text-2xl font-bold mb-4">SDK Error</h2>
+          <p className="text-red-200">{sdkError}</p>
+        </div>
       </div>
     );
   }
 
   if (!sdkReady) {
     return (
-      <div className="app-loading">
-        <div className="spinner" />
-        <h2>Loading RunAnywhere SDK...</h2>
-        <p>Initializing on-device AI engine</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex items-center justify-center text-white">
+        <div className="text-center">
+          <div className="relative w-24 h-24 mx-auto mb-6">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-orange-500 rounded-full animate-ping opacity-75"></div>
+            <div className="relative w-24 h-24 bg-gradient-to-r from-purple-600 to-orange-600 rounded-full flex items-center justify-center text-4xl">
+              🔮
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-orange-400 bg-clip-text text-transparent mb-2">
+            Loading Parallel You
+          </h2>
+          <p className="text-gray-400">Initializing on-device AI engine...</p>
+        </div>
       </div>
     );
   }
 
-  const accel = getAccelerationMode();
-
-  return (
-    <div className="app">
-      <header className="app-header">
-        <h1>RunAnywhere AI</h1>
-        {accel && <span className="badge">{accel === 'webgpu' ? 'WebGPU' : 'CPU'}</span>}
-      </header>
-
-      <nav className="tab-bar">
-        <button className={activeTab === 'parallel' ? 'active' : ''} onClick={() => setActiveTab('parallel')}>
-          🔮 ParallelYou
-        </button>
-        <button className={activeTab === 'chat' ? 'active' : ''} onClick={() => setActiveTab('chat')}>
-          💬 Chat
-        </button>
-        <button className={activeTab === 'vision' ? 'active' : ''} onClick={() => setActiveTab('vision')}>
-          📷 Vision
-        </button>
-        <button className={activeTab === 'voice' ? 'active' : ''} onClick={() => setActiveTab('voice')}>
-          🎙️ Voice
-        </button>
-        <button className={activeTab === 'tools' ? 'active' : ''} onClick={() => setActiveTab('tools')}>
-          🔧 Tools
-        </button>
-      </nav>
-
-      <main className="tab-content">
-        {activeTab === 'parallel' && <ParallelYouTab />}
-        {activeTab === 'chat' && <ChatTab />}
-        {activeTab === 'vision' && <VisionTab />}
-        {activeTab === 'voice' && <VoiceTab />}
-        {activeTab === 'tools' && <ToolsTab />}
-      </main>
-    </div>
-  );
+  return <ParallelYouTab />;
 }

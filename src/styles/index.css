@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ---------------------------------------------------------------------------
  * RunAnywhere Web Starter — Design System
  * Dark theme, modern, responsive
