@@ -5,7 +5,7 @@ A minimal React + TypeScript starter app demonstrating **on-device AI in the bro
 ## Features
 
 | Tab | What it does |
-|-----|-------------|
+|-----|------------   -|
 | **Chat** | Stream text from an on-device LLM (LFM2 350M) |
 | **Vision** | Point your camera and describe what the VLM sees (LFM2-VL 450M) |
 | **Voice** | Speak naturally — VAD detects speech, STT transcribes, LLM responds, TTS speaks back |
